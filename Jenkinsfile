@@ -3,9 +3,20 @@ pipeline {
 
     environment {
         PYTHON_VERSION = '3.9'
+        DOCKER_PATH = '/usr/local/bin:$PATH'  // Ensure Docker is in the path
     }
 
     stages {
+        stage('Check Docker Version') {
+            steps {
+                script {
+                    // Check Docker version to verify Docker is accessible
+                    sh 'echo $PATH'  // Print environment variables for debugging
+                    sh 'docker --version'  // Verify Docker is available in Jenkins
+                }
+            }
+        }
+
         stage('Checkout') {
             steps {
                 // Checkout the source code from your Git repository and specify the branch
