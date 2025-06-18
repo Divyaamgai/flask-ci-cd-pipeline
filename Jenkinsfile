@@ -8,8 +8,8 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                // Checkout the source code from your Git repository
-                git 'https://github.com/Divyaamgai/flask-ci-cd-pipeline.git'
+                // Checkout the source code from your Git repository and specify the branch
+                git branch: 'main', url: 'https://github.com/Divyaamgai/flask-ci-cd-pipeline.git'
             }
         }
 
