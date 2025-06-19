@@ -10,16 +10,14 @@ pipeline {
         stage('Check Docker Version') {
             steps {
                 script {
-                    // Check Docker version to verify Docker is accessible
-                    sh 'echo $PATH'  // Print environment variables for debugging
-                    sh 'docker --version'  // Verify Docker is available in Jenkins
+                    sh 'echo $PATH'
+                    sh 'docker --version'
                 }
             }
         }
 
         stage('Checkout') {
             steps {
-                // Checkout the source code from your Git repository and specify the branch
                 git branch: 'main', url: 'https://github.com/Divyaamgai/flask-ci-cd-pipeline.git'
             }
         }
@@ -27,7 +25,6 @@ pipeline {
         stage('Set up Python Environment') {
             steps {
                 script {
-                    // Create a virtual environment and install dependencies
                     sh 'python3 -m venv venv'
                     sh './venv/bin/pip install --upgrade pip'
                     sh './venv/bin/pip install -r requirements.txt'
@@ -38,7 +35,6 @@ pipeline {
         stage('Run Tests') {
             steps {
                 script {
-                    // Run tests (ensure you have test cases in your repo)
                     sh './venv/bin/python -m unittest discover'
                 }
             }
@@ -47,7 +43,6 @@ pipeline {
         stage('Build Docker Image') {
             steps {
                 script {
-                    // Build Docker image
                     sh 'docker build -t flask-app .'
                 }
             }
@@ -56,7 +51,12 @@ pipeline {
         stage('Deploy') {
             steps {
                 script {
-                    // Deploy to your desired environment (Docker, Azure, etc.)
+                    echo "Stopping any existing containers on port 5000"
+                    sh '''
+                        docker ps --filter "publish=5000" -q | xargs -r docker stop || true
+                        docker ps -a --filter "publish=5000" -q | xargs -r docker rm || true
+                    '''
+                    echo "Running new container on port 5000"
                     sh 'docker run -d -p 5000:5000 flask-app'
                 }
             }
@@ -65,7 +65,6 @@ pipeline {
 
     post {
         always {
-            // Clean up workspace
             cleanWs()
         }
 
