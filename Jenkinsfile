@@ -128,15 +128,15 @@ pipeline {
             }
         }
 
-        // stage('Trivy Scan') {
-        //     steps {
-        //         script {
-        //             echo "Running Trivy vulnerability scan..."
-        //             // Run scan and fail build if HIGH or CRITICAL issues found
-        //             sh 'trivy image --exit-code 1 --severity HIGH,CRITICAL flask-app'
-        //         }
-        //     }
-        // }
+        stage('Trivy Scan') {
+            steps {
+                script {
+                    echo "Running Trivy vulnerability scan..."
+                    // Run scan and fail build if HIGH or CRITICAL issues found
+                    sh 'trivy image --exit-code 1 --severity CRITICAL flask-app'
+                }
+            }
+        }
 
         stage('Deploy') {
             steps {
