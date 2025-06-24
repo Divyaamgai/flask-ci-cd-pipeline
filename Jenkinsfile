@@ -133,7 +133,7 @@ pipeline {
                 script {
                     echo "Running Trivy vulnerability scan..."
                     // Run scan and fail build if HIGH or CRITICAL issues found
-                    sh 'trivy image --exit-code 1 --severity HIGH CRITICAL --ignore-unfixed flask-app'
+                    sh 'trivy image --exit-code 1 --severity HIGH, CRITICAL --ignore-unfixed flask-app'
                 }
             }
         }
