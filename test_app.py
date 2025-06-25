@@ -6,7 +6,7 @@ class FlaskTest(unittest.TestCase):
         tester = app.test_client(self)
         response = tester.get('/hello')
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(response.data.decode(), "Hello, DevOps!")
+        self.assertEqual(response.data.decode(), "Hello, DevOps! this is in class")
     
     def test_hi(self):
         tester = app.test_client(self)

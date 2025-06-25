@@ -11,7 +11,7 @@ yes_counter = Counter('yes_requests_total', 'Total /yes requests')
 @app.route('/hello')
 def hello():
     hello_counter.inc()
-    return "Hello, DevOps!"
+    return "Hello, DevOps! this is in class"
 
 @app.route('/hi')
 def hi():
